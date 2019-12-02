@@ -368,7 +368,7 @@ class CXImage():
             raise AttributeError("GetData parameters error!")
 
         if data.ndim == 3 and data_arrange == 0:
-            data = data.transpose(1, 2, 0)
+            data = data.transpose((1, 2, 0))
         elif data.ndim == 3 and data_arrange == 1:
             pass
         elif data.ndim == 2:
@@ -379,7 +379,6 @@ class CXImage():
         data = data.astype(dataType)
 
         return data
-
 
     def NormlizedData(self, data, setMin=0, setMax=1):
         return
@@ -397,7 +396,7 @@ class CXImage():
             temp_currentWidth = self.currentWidth
             temp_currentHeight = self.currentHeight
             if data_arrange == 0 and pData.ndim == 3:
-                temp_data = pData.transpose(2, 0, 1)
+                temp_data = pData.transpose((2, 0, 1))
             else:
                 temp_data = pData
         # 无参数图像写入
@@ -442,7 +441,7 @@ class CXImage():
             temp_currentHeight = temp_currentHeight - padding / 2
 
         if data_arrange == 0 and pData.ndim == 3:
-            pData = pData.transpose(2, 0, 1)
+            pData = pData.transpose((2, 0, 1))
 
         if pData.ndim == 3:
             if cPosX == 0 and cPosY == 0:
@@ -492,15 +491,15 @@ class CXImage():
 
 if __name__ == '__main__':
     # test parameters multiple band
-    instrImgPath = r"C:\Users\Admin\Desktop\new\subset_result"
+    instrImgPath = r"C:\Users\Admin\Desktop\salinas_byte"
     xImgIn = CXImage()
     xImgIn.Open(instrImgPath)
-    xImgIn.setPartSize(memorySize=6000)
-    padding = 100
+    # xImgIn.setPartSize(memorySize=6000)
+    padding = 0
     partionNum, maxPartionHeight, maxPartionWidth = xImgIn.getPartionNum(padding)
 
     outImg = CXImage()
-    strImgPath = r"C:\Users\Admin\Desktop\17.tiff"
+    strImgPath = r"C:\Users\Admin\Desktop\P0.tiff"
     outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath)
 
     for i in range(partionNum):
@@ -510,7 +509,7 @@ if __name__ == '__main__':
         currentPosY = xImgIn.currentPosY
         xImgIn.next(padding)
         # 正常的代码处理，现在的输入数据是inImgData，大小是currentHeight,currentWidth
-        inImgData = xImgIn.GetData(np.float32, currentHeight, currentWidth, currentPosX, currentPosY, data_arrange=1)
+        inImgData = xImgIn.GetData(np.uint8, currentHeight, currentWidth, currentPosX, currentPosY, data_arrange=1)
         # 处理代码段
         outImg.WriteImgData(inImgData, currentHeight, currentWidth, currentPosX, currentPosY, padding, data_arrange=1)
         del inImgData
@@ -545,17 +544,17 @@ if __name__ == '__main__':
     # instrImgPath = r"C:\Users\Admin\Desktop\salinas_gt.envi"
     # xImgIn_test = CXImage()
     # xImgIn_test.Open(instrImgPath)
-    # xImgIn_test.setPartSize(memorySize=6000)
-    # padding = 100
+    # # xImgIn_test.setPartSize(memorySize=6000)
+    # padding = 0
     # partionNum, maxPartionHeight, maxPartionWidth = xImgIn_test.getPartionNum(padding)
     #
     # outImg_test = CXImage()
-    # strImgPath = r"C:\Users\Admin\Desktop\15.tiff"
+    # strImgPath = r"C:\Users\Admin\Desktop\P1.tiff"
     # outImg_test.Create(xImgIn_test.m_nBands, xImgIn_test.m_nLines, xImgIn_test.m_nSamples, np.uint8, strImgPath)
     # outImg_test.setPartSize(xImgIn_test.partWidth, xImgIn_test.partHeight)
     #
     # for i in range(partionNum):
-    #     inImgData = xImgIn_test.GetData(np.float32, data_arrange=1)
+    #     inImgData = xImgIn_test.GetData(np.uint8, data_arrange=1)
     #     outImg_test.WriteImgData(inImgData, padding=padding, data_arrange=1)
     #     xImgIn_test.next(padding)   # GetData
     #     outImg_test.next(padding)   # WriteImgData

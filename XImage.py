@@ -1,5 +1,6 @@
 from osgeo import gdal
 import numpy as np
+from osgeo import gdal_array
 import os
 import cmath
 import copy
@@ -29,7 +30,7 @@ class CXImage():
     m_nSamples = 0  # width
     m_nClasses = 0
 
-    m_nDataType = gdal.GDT_Byte
+    m_nDataType = np.uint8
     m_strImgPath = ""
 
     currentHeight = 0
@@ -45,7 +46,7 @@ class CXImage():
     minBandValue = None
     maxBandValue = None
 
-    def __init__(self, nBands=0, nLines=0, nSamples=0, nDataType=gdal.GDT_Byte, nClass=0, strImgPath=None):
+    def __init__(self, nBands=0, nLines=0, nSamples=0, nDataType=np.uint8, nClass=0, strImgPath=None):
         self.m_nBands = nBands
         self.m_nLines = nLines
         self.m_nSamples = nSamples
@@ -332,10 +333,34 @@ class CXImage():
         # self.proDataset.SetGCPs(GCPCount, getGCPS, GCPProjection)
 
     def GetData(self, dataType, cHeight=-1, cWidth=-1, cPosX=-1, cPosY=-1, isParallel=False):
+        if dataType == 0:
+            dataType_result = None
+        elif dataType == 1:
+            dataType_result = np.uint8
+        elif dataType == 2:
+            dataType_result = np.uint16
+        elif dataType == 3:
+            dataType_result = np.int16
+        elif dataType == 4:
+            dataType_result = np.uint32
+        elif dataType == 5:
+            dataType_result = np.int32
+        elif dataType == 6:
+            dataType_result = np.float32
+        elif dataType == 7:
+            dataType_result = np.float64
+        elif dataType == 8:
+            dataType_result = np.complex64
+        elif dataType == 9:
+            dataType_result = np.complex64
+        elif dataType == 10:
+            dataType_result = np.complex64
+        elif dataType == 11:
+            dataType_result = np.complex128
+        else:
+            dataType_result = dataType
         # 没有设置cHeight、cWidth、cPosX、cPosY表示全读
         if cHeight == -1 and cWidth == -1 and cPosX == -1 and cPosY == -1:
-            size = self.currentHeight * self.currentWidth
-
             data = self.proDataset.ReadAsArray(self.currentPosX, self.currentPosY, self.currentWidth, self.currentHeight)
             # bandMap = np.zeros(self.m_nBands, dtype=int)
             # for i in range(1, self.m_nBands+1):
@@ -347,9 +372,9 @@ class CXImage():
             #     else:
             #         data = np.concatenate((data, np.array([band.ReadAsArray(self.currentPosX, self.currentPosY, self.currentWidth, self.currentHeight)])), axis=0)
             # # del bandMap
-            # data_result = data.astype(np, dataType)
+            data_result = data.astype(dataType_result)
             # return data_result
-            return data
+            return data_result
         # 分块读取，返回以点cPosX、cPosY为左上角顶点，cWidth、cHeight为宽高，m_nBands为波段数，dataType为数据类型的三维数组数据
         elif cHeight != -1 and cWidth != -1 and cPosX != -1 and cPosY != -1:
             # bandMap = np.zeros(self.m_nBands, dtype=int)
@@ -366,15 +391,8 @@ class CXImage():
             if proDatasetTemp != None:
                 del proDatasetTemp
             if not isParallel:
-                for i in range(1, self.m_nBands + 1):
-                    band = self.proDataset.GetRasterBand(i)
-                    if i == 1:
-                        data = band.ReadAsArray(cPosX, cPosY, cWidth, cHeight)
-                        data = np.array([data])
-                    else:
-                        data = np.concatenate((data, np.array([band.ReadAsArray(cPosX, cPosY, cWidth, cHeight)])), axis=0)
-                # data = self.proDataset.ReadAsArray(cPosX, cPosY, cWidth, cHeight)
-            data_result = data.astype(np, dataType)
+                data = self.proDataset.ReadAsArray(cPosX, cPosY, cWidth, cHeight)
+            data_result = data.astype(dataType_result)
             # del bandMap
             return data_result
         else:
@@ -443,7 +461,7 @@ class CXImage():
                 temp_currentHeight = temp_currentHeight - padding / 2
             # temp_size = temp_currentHeight * temp_currentWidth
             temp_data = np.random.randint(1, size=(self.m_nBands, int(temp_currentHeight), int(temp_currentWidth)))
-            temp_data = temp_data.astype(np, self.m_nDataType)
+            temp_data = temp_data.astype(pData.dtype)
             # temp_data = np.zeros(temp_size * self.m_nBands)
             # temp_data = np.array([temp_data])
             for k in range(self.m_nBands):
@@ -498,20 +516,20 @@ class CXImage():
             self.currentHeight = self.m_nLines - self.currentPosY
 
 if __name__ == '__main__':
-    #分块输出
-    # image = CXImage()
-    # image.Open(r"C:\Users\Admin\Desktop\salinas_gt.envi")
-    # image.setPartSize(setPartWidth=20, setPartHeight=20)
-    # image.Multi_Create(nBands=1, nDataType=gdal.GDT_Byte, strImgPath=r"C:\Users\Admin\Desktop\20190929gt", nClass=0, maxPartionWidth=30, maxPartionHeight=30, padding=4)
-
+    # 分块输出
+    image = CXImage()
+    image.Open(r"C:\Users\Admin\Desktop\salinas_byte")
+    image.setPartSize(setPartWidth=20, setPartHeight=20)
+    image.Multi_Create(nBands=3, nDataType=gdal.GDT_Byte, strImgPath=r"C:\Users\Admin\Desktop\20190929", nClass=0, maxPartionWidth=30, maxPartionHeight=30, padding=4)
+    del image
     # image.Create(nBands=3, nLines=217, nSamples=512, nDataType=gdal.GDT_Byte, strImgPath=r"C:\Users\Admin\Desktop\S4.tiff", nClass=0, temp_image=temp_image)    # 1605 , 2602
 
-    #非分块输出
-    image = CXImage()
-    image.Open(r"C:\Users\Admin\Desktop\new\subset_result")
-    # image.Create(nBands=9, nLines=1605, nSamples=2602, nDataType=gdal.GDT_Byte, strImgPath=r"C:\Users\Admin\Desktop\3.tiff", nClass=0)
-    image.GetData(gdal.GDT_Byte)
-    del image
+    # 非分块输出
+    # image = CXImage()
+    # image.Open(r"C:\Users\Admin\Desktop\new\subset_result")
+    # # image.Create(nBands=9, nLines=1605, nSamples=2602, nDataType=gdal.GDT_Byte, strImgPath=r"C:\Users\Admin\Desktop\3.tiff", nClass=0)
+    # image.GetData(gdal.GDT_Byte)
+    # del image
 
 
 

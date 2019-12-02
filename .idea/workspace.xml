@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c57fbf02-6d09-40a0-8042-0d6034b0e7a7" name="Default Changelist" comment="" />
+    <list default="true" id="c57fbf02-6d09-40a0-8042-0d6034b0e7a7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROIComputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROIComputation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XImage-ZJ.py" beforeDir="false" afterPath="$PROJECT_DIR$/XImage-ZJ.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XImage.py" beforeDir="false" afterPath="$PROJECT_DIR$/XImage.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +20,13 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1QsJ4nwDHLuWNHkisr9jQGR8FgG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/XImage-test.py" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
@@ -33,7 +43,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.XImage-ZJ">
+  <component name="RunManager" selected="Python.XImage">
     <configuration name="XImage-ZJ" type="PythonConfigurationType" factoryName="Python">
       <module name="ROI" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -193,23 +203,52 @@
       <workItem from="1571479281696" duration="216000" />
       <workItem from="1571485496295" duration="1123000" />
       <workItem from="1571488759465" duration="1211000" />
+      <workItem from="1571735629182" duration="3000" />
+      <workItem from="1571737111212" duration="2653000" />
+      <workItem from="1571743401462" duration="1317000" />
+      <workItem from="1571926135037" duration="1160000" />
+      <workItem from="1571965912913" duration="1307000" />
+      <workItem from="1571995230126" duration="1608000" />
+      <workItem from="1572440729214" duration="2518000" />
+      <workItem from="1572575355109" duration="78000" />
+      <workItem from="1572575477802" duration="7000" />
+      <workItem from="1572575667607" duration="14000" />
+      <workItem from="1572848462533" duration="636000" />
+      <workItem from="1575246874372" duration="1363000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="id(inImgData)" language="Python" />
-      </configuration>
-    </watches-manager>
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/XImage.py</url>
+          <line>125</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ROIComputation$XImage.coverage" NAME="XImage Coverage Results" MODIFIED="1568904800207" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ROI$XImage.coverage" NAME="XImage Coverage Results" MODIFIED="1571146391086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ROI$XImage.coverage" NAME="XImage Coverage Results" MODIFIED="1571744121725" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ROI$XImage_test.coverage" NAME="XImage-test Coverage Results" MODIFIED="1571364179800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ROI$XImage_ZJ.coverage" NAME="XImage-ZJ Coverage Results" MODIFIED="1571475738012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ROI$XImage_ZJ.coverage" NAME="XImage-ZJ Coverage Results" MODIFIED="1571966177196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

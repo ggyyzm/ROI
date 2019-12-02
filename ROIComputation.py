@@ -245,7 +245,7 @@ class PyROIComputation():
 
         return True
 
-    # 随机选择样本作用训练
+    # 随机选择样本用作训练
     def randSelectedSamples(self, ratio = 0.05, minSampleNum = 100):
         classRatio = 0.0
         maxSampleNum = 0

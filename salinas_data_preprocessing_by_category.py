@@ -493,7 +493,7 @@ class CXImage():
 TOTAL_SIZE = 54129
 TRAIN_SIZE = 43303
 VAL_SIZE = TOTAL_SIZE - TRAIN_SIZE
-VALIDATION_SPLIT = 0.8
+VALIDATION_SPLIT = 0.2
 seeds = np.random.randint(0, 2000, 2001)
 
 
@@ -511,7 +511,7 @@ def indexToAssignment(index_, Row, Col):
 def sampling(proptionVal, groundTruth):              # divide dataset into train and test datasets
     '''
         proptionVal: 比例
-        groundTruth: 降维后的groundtruth
+        groundTruth: groundtruth
     '''
     # labels_loc = {}
     train = {}
@@ -544,8 +544,22 @@ def generate_array(assign, height, width):
     return result
 
 
+# 根据groundTruth将assign按类别划分
+def divide_by_category(assign, groundTruth):
+    result = {}
+    num = np.zeros(num_classes+1, dtype=np.uint32)
+    for j in range(1, num_classes+1):
+        result[j] = {}
+
+    for i in range(len(assign)):
+        # if groundTruth[assign[i][0]][assign[i][1]] != 0:
+        result[groundTruth[assign[i][0]][assign[i][1]]][num[groundTruth[assign[i][0]][assign[i][1]]]] = assign[i]
+        num[groundTruth[assign[i][0]][assign[i][1]]] += 1
+    return result
+
 # 将训练集和测试集按比例划分
-# 对训练集设置(j的循环次数)次采样，每次采样将训练集打乱并取前若干个像素。
+# 将训练集中每个类别的点单独分出来
+# 对训练集设置(j的循环次数)次采样，每次采样将训练集每个类别的像素分别打乱并取前若干个像素。
 # 对测试集只取所有测试集像素的一张图
 if __name__ == '__main__':
     # parameters & multiple band
@@ -553,6 +567,7 @@ if __name__ == '__main__':
     xImgIn = CXImage()
     xImgIn.Open(instrImgPath)
     padding = 0
+    num_classes = 16
 
     # groundtruth
     xGroundTruthImgPath = r"C:\Users\Admin\Desktop\salinas_gt.envi"
@@ -574,27 +589,35 @@ if __name__ == '__main__':
     train_assign = indexToAssignment(train_indices, groundTruthData.shape[0], groundTruthData.shape[1])
     test_assign = indexToAssignment(test_indices, groundTruthData.shape[0], groundTruthData.shape[1])
 
-    # train
-    for j in range(100):
-        np.random.seed(seeds[j])
-        np.random.shuffle(train_assign)
-        temp_train_assign = list(train_assign.values())[:10000]
+    train_assign_by_category = divide_by_category(train_assign, groundTruthData)
 
-        train_label_random_array = generate_array(temp_train_assign, groundTruthData.shape[0], groundTruthData.shape[1],
-                                                  option='train')
+    # train
+    for j in range(16):
+        np.random.seed(seeds[j])
+        temp_train_assign = []
+        for i in range(1, num_classes+1):
+            np.random.shuffle(train_assign_by_category[i])
+            temp_train_assign += list(train_assign_by_category[i].values())[:200]
+
+        # 生成训练集label的mask
+        train_label_random_array = generate_array(temp_train_assign, groundTruthData.shape[0], groundTruthData.shape[1])
+        # 生成训练集image的mask
         train_image_random_array = np.array([train_label_random_array, train_label_random_array])
         temp_train_label_random_array = np.array([train_label_random_array])
+        # 针对多波段
         for k in range(1):
             train_image_random_array = np.concatenate((train_image_random_array, temp_train_label_random_array), axis=0)
         train_image_random_array = train_image_random_array.transpose((1, 2, 0))
 
+        # 根据训练集image的mask对imageData进行处理，将忽略的pixel置0
         temp_image_data = inImgData * train_image_random_array
         temp_image_data = temp_image_data.astype(np.uint8)
+        # 根据训练集label的mask对groundTruthData进行处理，将忽略的pixel置0
         temp_seg_data = groundTruthData * train_label_random_array
         temp_seg_data = temp_seg_data.astype(np.uint8)
 
         outImg = CXImage()
-        strImgPath = r"C:\Users\Admin\Desktop\20191204_3d_1Wpoints\P"+str(j)+".tiff"
+        strImgPath = r"C:\Users\Admin\Desktop\2019_12_10_salinas_3d_200pclass\P"+str(j)+".tiff"
         outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath)
 
         # 处理代码段
@@ -602,7 +625,7 @@ if __name__ == '__main__':
         del outImg
 
         outImg_gt = CXImage()
-        strImgPath_gt = r"C:\Users\Admin\Desktop\20191204_3d_1Wpointsgt\P" + str(j) + ".tiff"
+        strImgPath_gt = r"C:\Users\Admin\Desktop\2019_12_10_salinas_3d_200pclassgt\P" + str(j) + ".tiff"
         outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath_gt)
         outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
                             data_arrange=0)
@@ -610,41 +633,36 @@ if __name__ == '__main__':
         # outImg.setHeaderInformation(xImgIn)
         del outImg_gt
 
-    # test
-    test_label_random_array = generate_array(test_assign, groundTruthData.shape[0], groundTruthData.shape[1],
-                                              option='test')
-    test_image_random_array = np.array([test_label_random_array, test_label_random_array])
-    temp_test_label_random_array = np.array([test_label_random_array])
-    for k in range(1):
-        test_image_random_array = np.concatenate((test_image_random_array, temp_test_label_random_array), axis=0)
-    test_image_random_array = test_image_random_array.transpose((1, 2, 0))
+        # test
+        test_label_random_array = generate_array(test_assign, groundTruthData.shape[0], groundTruthData.shape[1])
+        test_image_random_array = np.array([test_label_random_array, test_label_random_array])
+        temp_test_label_random_array = np.array([test_label_random_array])
+        for k in range(1):
+            test_image_random_array = np.concatenate((test_image_random_array, temp_test_label_random_array), axis=0)
+        test_image_random_array = test_image_random_array.transpose((1, 2, 0))
 
-    temp_image_data = inImgData * test_image_random_array
-    temp_image_data = temp_image_data.astype(np.uint8)
-    temp_seg_data = groundTruthData * test_label_random_array
-    temp_seg_data = temp_seg_data.astype(np.uint8)
+        temp_image_data = inImgData * test_image_random_array
+        temp_image_data = temp_image_data.astype(np.uint8)
+        temp_seg_data = groundTruthData * test_label_random_array
+        temp_seg_data = temp_seg_data.astype(np.uint8)
 
-    outImg = CXImage()
-    strImgPath = r"C:\Users\Admin\Desktop\20191204_3d_1Wpoints\P101.tiff"
-    outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath)
+        outImg = CXImage()
+        strImgPath = r"C:\Users\Admin\Desktop\2019_12_10_salinas_3d_200pclass\P101.tiff"
+        outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath)
 
-    # 处理代码段
-    outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
-                        data_arrange=0)
-    del outImg
+        # 处理代码段
+        outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
+                            data_arrange=0)
+        del outImg
 
-    outImg_gt = CXImage()
-    strImgPath_gt = r"C:\Users\Admin\Desktop\20191204_3d_1Wpointsgt\P101.tiff"
-    outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath_gt)
+        outImg_gt = CXImage()
+        strImgPath_gt = r"C:\Users\Admin\Desktop\2019_12_10_salinas_3d_200pclassgt\P101.tiff"
+        outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint8, strImgPath_gt)
 
-    outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
-                           data_arrange=0)
-    # del inImgData
-    # outImg.setHeaderInformation(xImgIn)
+        outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
+                               data_arrange=0)
+        # del inImgData
+        # outImg.setHeaderInformation(xImgIn)
 
-    del outImg_gt
-
-
-
-
+        del outImg_gt
 

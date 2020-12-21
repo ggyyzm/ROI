@@ -6,7 +6,7 @@ def cut_image(inImgPath, outImgPath, cPosX, cPosY, cHeight, cWidth):
     inImg = CXImage()
     inImg.Open(inImgPath)
     inImgData = inImg.GetData(np.uint32, inImg.currentHeight, inImg.currentWidth, inImg.currentPosX, inImg.currentPosY, data_arrange=0)
-    
+
     outImg = CXImage()
     outImg.Create(inImg.m_nBands, cHeight, cWidth, np.uint32, outImgPath)
     outImg.WriteImgData(inImgData, cHeight, cWidth, cPosX, cPosY, padding=0, data_arrange=0)
@@ -28,3 +28,4 @@ if __name__ == '__main__':
 
     cut_image(instrImgPath, outstrImgPath, PosX, PosY, cut_Height, cut_Width)
     cut_image(instrGtPath, outstrGtPath, PosX, PosY, cut_Height, cut_Width)
+

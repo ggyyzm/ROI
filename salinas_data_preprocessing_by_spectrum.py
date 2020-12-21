@@ -74,7 +74,6 @@ if __name__ == '__main__':
         outImg.Create(3, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
         outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
                             data_arrange=0)
-        del outImg
 
         outImg_gt = CXImage()
         strImgPath_gt = r"C:\Users\Admin\Desktop\2019_12_13_normal_200pclassTrainingset_128random_spectrumgt\P" + str(
@@ -82,9 +81,6 @@ if __name__ == '__main__':
         outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
         outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
                                data_arrange=0)
-        # del inImgData
-        # outImg.setHeaderInformation(xImgIn)
-        del outImg_gt
 
         # test
         test_label_random_array = generate_array(test_assign, groundTruthData.shape[0], groundTruthData.shape[1])
@@ -115,7 +111,3 @@ if __name__ == '__main__':
         outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
         outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
                                data_arrange=0)
-        # del inImgData
-        # outImg.setHeaderInformation(xImgIn)
-
-        del outImg_gt

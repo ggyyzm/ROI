@@ -111,3 +111,4 @@ def z_score_normalization(image, dtype, data_arrange):
 
     image = image.astype(dtype)
     return image
+

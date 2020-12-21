@@ -420,3 +420,4 @@ if __name__ == '__main__':
     strImgPath = r"C:\Users\Admin\Desktop\JAN_gt_1.tiff"
     outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath)
     outImg.WriteImgData(inImgData, currentHeight, currentWidth, currentPosX, currentPosY, padding=0, data_arrange=0)
+

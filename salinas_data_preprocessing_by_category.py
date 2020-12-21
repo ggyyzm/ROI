@@ -71,16 +71,12 @@ if __name__ == '__main__':
         outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
         outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding=0,
                             data_arrange=0)
-        del outImg
 
         outImg_gt = CXImage()
         strImgPath_gt = r"C:\Users\Admin\Desktop\20200114_204d_200pclassTrainingsetgt\P" + str(j) + ".tiff"
         outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
         outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding=0,
                                data_arrange=0)
-        # del inImgData
-        # outImg.setHeaderInformation(xImgIn)
-        del outImg_gt
 
     # test
     test_label_random_array = generate_array(test_assign, groundTruthData.shape[0], groundTruthData.shape[1])
@@ -102,14 +98,10 @@ if __name__ == '__main__':
     outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
     outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding=0,
                         data_arrange=0)
-    del outImg
 
     outImg_gt = CXImage()
     strImgPath_gt = r"C:\Users\Admin\Desktop\20200114_204d_200pclassTrainingsetgt\P1000.tiff"
     outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
     outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding=0,
                            data_arrange=0)
-    # del inImgData
-    # outImg.setHeaderInformation(xImgIn)
 
-    del outImg_gt

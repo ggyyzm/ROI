@@ -277,4 +277,3 @@ class PyROIComputation():
 
     def SpecialUpdatePtsVal(self, img, istexture=False, isNormalization=True, nBandRed=2, nBandGreen=1, nBandInfrared=3):
         return
-

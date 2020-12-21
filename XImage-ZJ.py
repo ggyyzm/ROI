@@ -489,6 +489,7 @@ class CXImage():
         if self.currentPosY + self.partHeight > self.m_nLines or acceptHeight + self.currentPosY + self.partHeight > self.m_nLines:
             self.currentHeight = self.m_nLines - self.currentPosY
 
+
 if __name__ == '__main__':
     # test parameters multiple band
     instrImgPath = r"C:\Users\Admin\Desktop\salinas_byte"

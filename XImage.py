@@ -23,8 +23,8 @@ def GetFilePath(filepath):
         return str
 
 
-class CXImage():
-    '''
+class CXImage:
+    """
         m_nBands：波段数
         m_nLines：height
         m_nSamples：width
@@ -39,28 +39,14 @@ class CXImage():
         currentPosY：当前Y坐标
         data_arrange == 0 <==> (height, width, band)
                      == 1 <==> (band, height, width)(gdal)
-    '''
-    m_nBands = 0
-    m_nLines = 0
-    m_nSamples = 0
-
-    m_nDataType = np.float32
-    m_strImgPath = ""
+    """
 
     currentHeight = 0
     currentWidth = 0
     partWidth = 0
     partHeight = 0
-    isNormalization = True
-
-    proDataset = None
     currentPosX = 0
     currentPosY = 0
-
-    minBandValue = None
-    maxBandValue = None
-
-    # data_arrange = 0
 
     # 创建对象时的初始化操作
     def __init__(self, nBands=0, nLines=0, nSamples=0, nDataType=np.float32, strImgPath=None):
@@ -77,7 +63,7 @@ class CXImage():
 
     # 注册图像驱动，同时设置输出图像数据类型
     def Create(self, nBands, nLines, nSamples, nDataType, strImgPath):
-        '''
+        """
             np.uint8 <==> gdal.GDT_Byte == 1
             np.int8 <==> gdal.GDT_Byte == 1
             np.byte <==> gdal.GDT_Byte == 1
@@ -93,7 +79,7 @@ class CXImage():
             np.float <==> None
             np.int <==> None
             np.complex <==> None
-        '''
+        """
         nDataType_result = gdal_array.NumericTypeCodeToGDALTypeCode(nDataType)
 
         self.m_nBands = nBands

@@ -4,7 +4,12 @@
     <list default="true" id="c57fbf02-6d09-40a0-8042-0d6034b0e7a7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cut_coastline.py" beforeDir="false" afterPath="$PROJECT_DIR$/Cut_coastline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ROIComputation.py" beforeDir="false" afterPath="$PROJECT_DIR$/ROIComputation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/XImage-ZJ.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/XImage.py" beforeDir="false" afterPath="$PROJECT_DIR$/XImage.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_preporcess.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_preporcess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/salinas_data_preprocessing_by_category.py" beforeDir="false" afterPath="$PROJECT_DIR$/salinas_data_preprocessing_by_category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py" beforeDir="false" afterPath="$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -205,7 +210,7 @@
       <workItem from="1604978152028" duration="630000" />
       <workItem from="1608004745634" duration="1838000" />
       <workItem from="1608036204504" duration="445000" />
-      <workItem from="1608536300298" duration="3646000" />
+      <workItem from="1608536300298" duration="11545000" />
     </task>
     <task id="LOCAL-00001" summary="generate_salinas_training_images">
       <created>1575961522890</created>
@@ -242,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608538162714</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="z-score_normalization &amp; uint8_problem">
+      <created>1608540171591</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608540171591</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,35 +279,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="z-score_normalization &amp; uint8_problem" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py</url>
-          <line>653</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
-          <line>635</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
-          <line>674</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
-          <line>704</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
-          <line>655</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="inImgData" language="Python" />

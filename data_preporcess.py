@@ -1,5 +1,6 @@
 import numpy as np
 
+
 # 根据一维index输出shape为(len(index),2)的二维矩阵，表示点的横纵坐标
 def indexToAssignment(index_, Row, Col):
     new_assign = {}
@@ -12,10 +13,10 @@ def indexToAssignment(index_, Row, Col):
 
 # 根据groundTruth和比例，对每个类别分别按比例划分训练集和测试集(stochastic stratified sample)
 def sampling(proptionVal, groundTruth):              # divide dataset into train and test datasets
-    '''
+    """
         proptionVal: 比例
         groundTruth: groundtruth
-    '''
+    """
     # labels_loc = {}
     train = {}
     test = {}
@@ -41,10 +42,10 @@ def sampling(proptionVal, groundTruth):              # divide dataset into train
 
 # 根据groundTruth将原数据集按每类别固定num个数量进行划分
 def sampling_by_category(num, groundTruth):
-    '''
+    """
         num：训练集中每个类别的个数
         groundTruth: groundtruth
-    '''
+    """
     train = {}
     test = {}
     m = int(groundTruth.max())
@@ -90,10 +91,10 @@ def divide_by_category(assign, groundTruth, num_classes):
 
 # 对image进行z-score标准化
 def z_score_normalization(image, dtype, data_arrange):
-    '''
+    """
         data_arrange == 0 <==> (height, width, band)
                      == 1 <==> (band, height, width)(gdal)
-    '''
+    """
     image = image.astype(np.float32)
     if data_arrange == 0:
         for m in range(image.shape[2]):

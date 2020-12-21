@@ -1,26 +1,24 @@
 from osgeo import gdal, gdal_array
 import numpy as np
-import data_preporcess
 
 
 def GetSuffix(filepath):
     i = filepath.rfind('.')
-    str = ""
+    string = ""
     if i == -1 or i == 0 or (i == 1 and filepath[0] == '.') or filepath[i + 1].isdigit() or len(filepath) - i > 5:
-        return str
+        return string
     else:
-        str = filepath[i + 1:len(filepath)]
-        return str
+        string = filepath[i + 1:len(filepath)]
+        return string
 
 
 def GetFilePath(filepath):
     i = filepath.rfind('.')
-    str = ""
     if i == -1 or i == 0 or (i == 1 and filepath[0] == '.') or filepath[i + 1].isdigit():
         return filepath
     else:
-        str = filepath[0:i]
-        return str
+        string = filepath[0:i]
+        return string
 
 
 class CXImage:
@@ -321,7 +319,7 @@ class CXImage:
 
         temp_data = temp_data.astype(self.m_nDataType)
         self.proDataset.WriteRaster(int(temp_currentPosX), int(temp_currentPosY), int(temp_currentWidth),
-                                        int(temp_currentHeight), temp_data.tobytes())
+                                    int(temp_currentHeight), temp_data.tobytes())
         self.proDataset.FlushCache()
 
         if not np.all(temp_data == 0):
@@ -356,26 +354,20 @@ class CXImage:
             if cPosX == 0 and cPosY == 0:
                 temp_data = pData[:, :int(temp_currentHeight), :int(temp_currentWidth)]
             elif cPosX > 0 and cPosY == 0:
-                temp_data = pData[:, :int(temp_currentHeight),
-                            int(padding / 2):int(temp_currentWidth + padding / 2)]
+                temp_data = pData[:, :int(temp_currentHeight), int(padding / 2):int(temp_currentWidth + padding / 2)]
             elif cPosX > 0 and cPosY > 0:
-                temp_data = pData[:, int(padding / 2):int(temp_currentHeight + padding / 2),
-                            int(padding / 2):int(temp_currentWidth + padding / 2)]
+                temp_data = pData[:, int(padding / 2):int(temp_currentHeight + padding / 2), int(padding / 2):int(temp_currentWidth + padding / 2)]
             else:
-                temp_data = pData[:, int(padding / 2):int(temp_currentHeight + padding / 2),
-                            :int(temp_currentWidth)]
+                temp_data = pData[:, int(padding / 2):int(temp_currentHeight + padding / 2), :int(temp_currentWidth)]
         elif pData.ndim == 2:
             if cPosX == 0 and cPosY == 0:
                 temp_data = pData[:int(temp_currentHeight), :int(temp_currentWidth)]
             elif cPosX > 0 and cPosY == 0:
-                temp_data = pData[:int(temp_currentHeight),
-                            int(padding / 2):int(temp_currentWidth + padding / 2)]
+                temp_data = pData[:int(temp_currentHeight), int(padding / 2):int(temp_currentWidth + padding / 2)]
             elif cPosX > 0 and cPosY > 0:
-                temp_data = pData[int(padding / 2):int(temp_currentHeight + padding / 2),
-                            int(padding / 2):int(temp_currentWidth + padding / 2)]
+                temp_data = pData[int(padding / 2):int(temp_currentHeight + padding / 2), int(padding / 2):int(temp_currentWidth + padding / 2)]
             else:
-                temp_data = pData[int(padding / 2):int(temp_currentHeight + padding / 2),
-                            :int(temp_currentWidth)]
+                temp_data = pData[int(padding / 2):int(temp_currentHeight + padding / 2), :int(temp_currentWidth)]
         else:
             raise AttributeError("pData.ndim error!")
         return temp_currentHeight, temp_currentWidth, temp_currentPosX, temp_currentPosY, temp_data
@@ -428,7 +420,3 @@ if __name__ == '__main__':
     strImgPath = r"C:\Users\Admin\Desktop\JAN_gt_1.tiff"
     outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath)
     outImg.WriteImgData(inImgData, currentHeight, currentWidth, currentPosX, currentPosY, padding=0, data_arrange=0)
-
-
-
-

@@ -192,14 +192,14 @@ class PyROIComputation():
                 self.m_nRoiNum += 1
             bexist = False
         # 更新各个roi的名称
-        for i in roinum2:
+        for i in range(roinum2):
             self.m_psRoiName[i] = roiname2[i]
             del roiname2[i]
         del roiname2
         roiname2 = None
         count = roinum2
         for i in roinum1:
-            for j in roinum2:
+            for j in range(roinum2):
                 if roiname1[i] == self.m_psRoiName[j]:
                     bexist = True
             if not bexist:
@@ -269,7 +269,7 @@ class PyROIComputation():
         beforeSampleNums = 0
 
         for i in range(self.m_nRoiNum):
-
+            print("还没写完~")
         return
 
     def UpdatePtsVal(self, pImage, height, width, band):

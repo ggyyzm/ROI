@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@sftp://server123@172.27.6.48:22/home/server123/anaconda3/envs/env_zm/bin/python3.6">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/media/server123/747966f3-070a-42b3-af82-6edf8d1e1a93/zm/PycharmProjects/ROI" />
+            </list>
+          </settings>
+        </remote-mappings>
+        <remote-mappings server-id="python@sftp://server123@172.27.162.187:22/home/server123/miniconda3/envs/zm/bin/python">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/media/server123/747966f3-070a-42b3-af82-6edf8d1e1a93/zm/PycharmProjects/ROI" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>

@@ -490,11 +490,10 @@ class CXImage():
             self.currentHeight = self.m_nLines - self.currentPosY
 
 
-TOTAL_SIZE = 54129
-TRAIN_SIZE = 43303
-VAL_SIZE = TOTAL_SIZE - TRAIN_SIZE
+TOTAL_SIZE = 54129          # salinas:54129     indian_pines:10249
 VALIDATION_SPLIT = 0.8
-seeds = np.random.randint(0, 2000, 2001)
+# seeds = np.random.randint(0, 2000, 2001)
+NUM_OF_EACH_CLASS = 200
 
 
 # 根据一维index输出shape为(len(index),2)的二维矩阵，表示点的横纵坐标
@@ -507,11 +506,11 @@ def indexToAssignment(index_, Row, Col):
     return new_assign
 
 
-# 根据groundTruth和比例，对每个类别分别按比例划分训练集和测试集
+# 根据groundTruth和比例，对每个类别分别按比例划分训练集和测试集(stochastic stratified sample)
 def sampling(proptionVal, groundTruth):              # divide dataset into train and test datasets
     '''
         proptionVal: 比例
-        groundTruth: 降维后的groundtruth
+        groundTruth: groundtruth
     '''
     # labels_loc = {}
     train = {}
@@ -536,11 +535,52 @@ def sampling(proptionVal, groundTruth):              # divide dataset into train
     return train_indices, test_indices
 
 
+# 根据groundTruth将原数据集按每类别固定num个数量进行划分
+def sampling_by_category(num, groundTruth):
+    '''
+        num：训练集中每个类别的个数
+        groundTruth: groundtruth
+    '''
+    train = {}
+    test = {}
+    m = int(groundTruth.max())
+    for i in range(m):
+        indices = [j for j, x in enumerate(groundTruth.ravel().tolist()) if x == i + 1]
+        np.random.shuffle(indices)
+        # labels_loc[i] = indices
+        train[i] = indices[:num]  # 第num个之前的所有样本用作训练
+        test[i] = indices[num:]  # 第num个样本之后的所有样本用作测试
+    # whole_indices = []
+    train_indices = []
+    test_indices = []
+    for i in range(m):
+        # whole_indices += labels_loc[i]
+        train_indices += train[i]
+        test_indices += test[i]
+    np.random.shuffle(train_indices)
+    np.random.shuffle(test_indices)
+    return train_indices, test_indices
+
+
 # 生成mask
 def generate_array(assign, height, width):
     result = np.zeros((height, width), dtype=np.uint8)
     for i in range(len(assign)):
         result[assign[i][0], assign[i][1]] = 1
+    return result
+
+
+# 根据groundTruth将assign(e.g.训练集)按类别划分
+def divide_by_category(assign, groundTruth):
+    result = {}
+    num = np.zeros(num_classes+1, dtype=np.uint32)
+    for j in range(1, num_classes+1):
+        result[j] = {}
+
+    for i in range(len(assign)):
+        # if groundTruth[assign[i][0]][assign[i][1]] != 0:
+        result[groundTruth[assign[i][0]][assign[i][1]]][num[groundTruth[assign[i][0]][assign[i][1]]]] = assign[i]
+        num[groundTruth[assign[i][0]][assign[i][1]]] += 1
     return result
 
 
@@ -553,11 +593,13 @@ def z_score_normalization(image, dtype, data_arrange):
     image = image.astype(np.float32)
     if data_arrange == 0:
         for m in range(image.shape[2]):
-            img_mean, img_std = cal_mean_and_std_2d(image[:, :, m])
+            img_mean = np.mean(image[:, :, m])
+            img_std = np.std(image[:, :, m])
             image[:, :, m] = (image[:, :, m] - img_mean) / img_std
     elif data_arrange == 1:
         for m in range(image.shape[0]):
-            img_mean, img_std = cal_mean_and_std_2d(image[m, :, :])
+            img_mean = np.mean(image[m, :, :])
+            img_std = np.std(image[m, :, :])
             image[m, :, :] = (image[m, :, :] - img_mean) / img_std
     else:
         raise AttributeError("data_arrange error!")
@@ -566,124 +608,149 @@ def z_score_normalization(image, dtype, data_arrange):
     return image
 
 
-# 计算二维array的mean和std
-def cal_mean_and_std_2d(array):
-    mean = 0.
-    std = 0.
-    # calculate mean
-    for a in range(array.shape[0]):
-        for b in range(array.shape[1]):
-            mean += array[a][b]
-    mean /= array.size
-
-    # calculate std
-    for a in range(array.shape[0]):
-        for b in range(array.shape[1]):
-            std += (array[a][b] - mean)**2
-    std /= array.size
-    std = std**0.5
-    return mean, std
-
-
-# 将训练集和测试集按比例对每个类别进行划分
+# 将训练集和测试集按比例对每个类别进行划分(stochastic stratified sample)
 # 对训练集设置(j的循环次数)次采样，每次采样将训练集打乱并取前若干个像素。
 # 对测试集只取所有测试集像素的一张图
 if __name__ == '__main__':
     # parameters & multiple band
-    instrImgPath = r"C:\Users\Admin\Desktop\salinas.envi"
+    instrImgPath = r"C:\Users\Admin\Desktop\TDM1_DEM__30_S65W064_DEM_label.tif"
     xImgIn = CXImage()
     xImgIn.Open(instrImgPath)
-    padding = 0
+    # padding = 0
 
     # groundtruth
-    xGroundTruthImgPath = r"C:\Users\Admin\Desktop\salinas_gt.envi"
-    xGroundTruthImg = CXImage()
-    xGroundTruthImg.Open(xGroundTruthImgPath)
-    groundTruthData = xGroundTruthImg.GetData(np.uint32, data_arrange=0)
+    # xGroundTruthImgPath = r"C:\Users\Admin\Desktop\JAN_train_gt.tiff"
+    # xGroundTruthImg = CXImage()
+    # xGroundTruthImg.Open(xGroundTruthImgPath)
+    # groundTruthData = xGroundTruthImg.GetData(np.uint32, data_arrange=0)
 
     # data_preprocessing
     currentWidth = xImgIn.currentWidth
     currentHeight = xImgIn.currentHeight
     currentPosX = xImgIn.currentPosX
     currentPosY = xImgIn.currentPosY
-    xImgIn.next(padding)
+    # xImgIn.next(padding)
     # 正常的代码处理，现在的输入数据是inImgData，大小是currentHeight,currentWidth
-    inImgData = xImgIn.GetData(np.float32, currentHeight, currentWidth, currentPosX, currentPosY, data_arrange=0)
-    # z-score normalization
-    inImgData = z_score_normalization(inImgData, dtype=np.float32, data_arrange=0)
+    inImgData = xImgIn.GetData(np.uint32, currentHeight, currentWidth, currentPosX, currentPosY, data_arrange=0)
 
-    np.random.seed(seeds[0])
-    train_indices, test_indices = sampling(VALIDATION_SPLIT, groundTruthData)
-    train_assign = indexToAssignment(train_indices, groundTruthData.shape[0], groundTruthData.shape[1])
-    test_assign = indexToAssignment(test_indices, groundTruthData.shape[0], groundTruthData.shape[1])
+    # # 采样前z-score normalization
+    # inImgData = z_score_normalization(inImgData, dtype=np.float32, data_arrange=0)
+    # 为采样后z-score标准化计算image每一波段的mean和std
+    # mean, std = cal_mean_and_std_3d(inImgData, data_arrange=0)
 
-    # train
-    for j in range(128):
-        np.random.seed(seeds[j])
-        np.random.shuffle(train_assign)
-        temp_train_assign = list(train_assign.values())[:3200]
-
-        train_label_random_array = generate_array(temp_train_assign, groundTruthData.shape[0], groundTruthData.shape[1])
-        train_image_random_array = np.array([train_label_random_array, train_label_random_array])
-        temp_train_label_random_array = np.array([train_label_random_array])
-        for k in range(1):
-            train_image_random_array = np.concatenate((train_image_random_array, temp_train_label_random_array), axis=0)
-        train_image_random_array = train_image_random_array.transpose((1, 2, 0))
-
-        temp_image_data = inImgData * train_image_random_array
-        temp_image_data = temp_image_data.astype(np.float32)
-        temp_seg_data = groundTruthData * train_label_random_array
-        temp_seg_data = temp_seg_data.astype(np.uint32)
-
-        outImg = CXImage()
-        strImgPath = r"C:\Users\Admin\Desktop\20191212_normal_3d_3200points\P"+str(j)+".tiff"
-        outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
-
-        # 处理代码段
-        outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding, data_arrange=0)
-        del outImg
-
-        outImg_gt = CXImage()
-        strImgPath_gt = r"C:\Users\Admin\Desktop\20191212_normal_3d_3200pointsgt\P" + str(j) + ".tiff"
-        outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
-        outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
-                            data_arrange=0)
-        # del inImgData
-        # outImg.setHeaderInformation(xImgIn)
-        del outImg_gt
-
-    # test
-    test_label_random_array = generate_array(test_assign, groundTruthData.shape[0], groundTruthData.shape[1])
-    test_image_random_array = np.array([test_label_random_array, test_label_random_array])
-    temp_test_label_random_array = np.array([test_label_random_array])
-    for k in range(1):
-        test_image_random_array = np.concatenate((test_image_random_array, temp_test_label_random_array), axis=0)
-    test_image_random_array = test_image_random_array.transpose((1, 2, 0))
-
-    temp_image_data = inImgData * test_image_random_array
-    temp_image_data = temp_image_data.astype(np.float32)
-    temp_seg_data = groundTruthData * test_label_random_array
-    temp_seg_data = temp_seg_data.astype(np.uint32)
-
+    # 直接输出图像
     outImg = CXImage()
-    strImgPath = r"C:\Users\Admin\Desktop\20191212_normal_3d_3200points\P200.tiff"
-    outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
-
-    # 处理代码段
-    outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
-                        data_arrange=0)
+    strImgPath = r"C:\Users\Admin\Desktop\JAN_gt_1.tiff"
+    outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath)
+    outImg.WriteImgData(inImgData, currentHeight, currentWidth, currentPosX, currentPosY, padding=0, data_arrange=0)
     del outImg
 
-    outImg_gt = CXImage()
-    strImgPath_gt = r"C:\Users\Admin\Desktop\20191212_normal_3d_3200pointsgt\P200.tiff"
-    outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
+    # 根据groundtruth划分原数据集
+    # train_image_array = np.array([groundTruthData, groundTruthData, groundTruthData, groundTruthData], dtype=np.uint8)
+    # train_image_array = train_image_array.transpose((1, 2, 0))
+    # inImgData = inImgData * (train_image_array != 0)
+    # outImg = CXImage()
+    # strImgPath = r"C:\Users\Admin\Desktop\JAN_train.tiff"
+    # outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
+    # outImg.WriteImgData(inImgData, currentHeight, currentWidth, currentPosX, currentPosY, padding=0, data_arrange=0)
+    # del outImg
 
-    outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
-                           data_arrange=0)
-    # del inImgData
-    # outImg.setHeaderInformation(xImgIn)
-
-    del outImg_gt
+    # np.random.seed(200)
+    # train_indices, test_indices = sampling(VALIDATION_SPLIT, groundTruthData)
+    # train_assign = indexToAssignment(train_indices, groundTruthData.shape[0], groundTruthData.shape[1])
+    # test_assign = indexToAssignment(test_indices, groundTruthData.shape[0], groundTruthData.shape[1])
+    #
+    # # train
+    # for j in range(128):
+    #     np.random.seed(j)
+    #     np.random.shuffle(train_assign)
+    #     temp_train_assign = list(train_assign.values())[:1024]
+    #
+    #     train_label_random_array = generate_array(temp_train_assign, groundTruthData.shape[0], groundTruthData.shape[1])
+    #     train_image_random_array = np.array([train_label_random_array, train_label_random_array])
+    #     temp_train_label_random_array = np.array([train_label_random_array])
+    #     for k in range(1):
+    #         train_image_random_array = np.concatenate((train_image_random_array, temp_train_label_random_array), axis=0)
+    #     train_image_random_array = train_image_random_array.transpose((1, 2, 0))
+    #
+    #     # 根据训练集image的mask对imageData进行处理，将忽略的pixel置0
+    #     temp_image_data = inImgData * train_image_random_array
+    #     temp_image_data = temp_image_data.astype(np.float32)
+    #
+    #     # 对image进行大值标准化
+    #     temp_image_data = large_parameters_normalization(temp_image_data, np.float32, data_arrange=0)
+    #
+    #     # 采样后根据之前计算的每一波段的mean和std对image进行z-score标准化
+    #     temp_image_data = z_score_normalization(temp_image_data,
+    #                                             dtype=np.float32,
+    #                                             data_arrange=0,
+    #                                             mean=mean,
+    #                                             std=std)
+    #
+    #     # 根据训练集label的mask对groundTruthData进行处理，将忽略的pixel置0
+    #     temp_seg_data = groundTruthData * train_label_random_array
+    #     temp_seg_data = temp_seg_data.astype(np.uint32)
+    #
+    #     outImg = CXImage()
+    #     strImgPath = r"C:\Users\Admin\Desktop\20191216_corrected_normal_3d_1024points\P"+str(j)+".tiff"
+    #     outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
+    #     outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding, data_arrange=0)
+    #     del outImg
+    #
+    #     outImg_gt = CXImage()
+    #     strImgPath_gt = r"C:\Users\Admin\Desktop\20191216_corrected_normal_3d_1024pointsgt\P" + str(j) + ".tiff"
+    #     outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
+    #     outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
+    #                         data_arrange=0)
+    #     # del inImgData
+    #     # outImg.setHeaderInformation(xImgIn)
+    #     del outImg_gt
+    #
+    # # test
+    # test_label_random_array = generate_array(test_assign, groundTruthData.shape[0], groundTruthData.shape[1])
+    # test_image_random_array = np.array([test_label_random_array, test_label_random_array])
+    # temp_test_label_random_array = np.array([test_label_random_array])
+    # for k in range(1):
+    #     test_image_random_array = np.concatenate((test_image_random_array, temp_test_label_random_array), axis=0)
+    # test_image_random_array = test_image_random_array.transpose((1, 2, 0))
+    #
+    # # 根据测试集image的mask对imageData进行处理，将忽略的pixel置0
+    # temp_image_data = inImgData * test_image_random_array
+    # temp_image_data = temp_image_data.astype(np.float32)
+    #
+    # # 对image进行大值标准化
+    # temp_image_data = large_parameters_normalization(temp_image_data, np.float32, data_arrange=0)
+    #
+    # # 采样后根据之前计算的每一波段的mean和std对image进行z-score标准化
+    # temp_image_data = z_score_normalization(temp_image_data,
+    #                                         dtype=np.float32,
+    #                                         data_arrange=0,
+    #                                         mean=mean,
+    #                                         std=std)
+    #
+    # # 根据测试集label的mask对groundTruthData进行处理，将忽略的pixel置0
+    # temp_seg_data = groundTruthData * test_label_random_array
+    # temp_seg_data = temp_seg_data.astype(np.uint32)
+    #
+    # outImg = CXImage()
+    # strImgPath = r"C:\Users\Admin\Desktop\20191216_corrected_normal_3d_1024points\P200.tiff"
+    # outImg.Create(xImgIn.m_nBands, xImgIn.m_nLines, xImgIn.m_nSamples, np.float32, strImgPath)
+    #
+    # # 处理代码段
+    # outImg.WriteImgData(temp_image_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
+    #                     data_arrange=0)
+    # del outImg
+    #
+    # outImg_gt = CXImage()
+    # strImgPath_gt = r"C:\Users\Admin\Desktop\20191216_corrected_normal_3d_1024pointsgt\P200.tiff"
+    # outImg_gt.Create(1, xImgIn.m_nLines, xImgIn.m_nSamples, np.uint32, strImgPath_gt)
+    #
+    # outImg_gt.WriteImgData(temp_seg_data, currentHeight, currentWidth, currentPosX, currentPosY, padding,
+    #                        data_arrange=0)
+    # # del inImgData
+    # # outImg.setHeaderInformation(xImgIn)
+    #
+    # del outImg_gt
 
 
 

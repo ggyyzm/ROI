@@ -2,16 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c57fbf02-6d09-40a0-8042-0d6034b0e7a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/remote-mappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ROI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ROI.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/salinas_data_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/salinas_data_preprocessing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/salinas_data_preprocessing_by_category.py" beforeDir="false" afterPath="$PROJECT_DIR$/salinas_data_preprocessing_by_category.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py" beforeDir="false" afterPath="$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="ROI" />
@@ -29,9 +47,10 @@
   <component name="ProjectId" id="1QsJ4nwDHLuWNHkisr9jQGR8FgG" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py" />
+    <property name="last_opened_file_path" value="D:/Anaconda3/Scripts/conda.exe" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -46,7 +65,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.salinas_data_preprocessing_by_spectrum.py">
+  <component name="RunManager" selected="Python.salinas_data_preprocessing.py">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="ROI" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,6 +114,9 @@
       <module name="ROI" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="D:\Anaconda3\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
@@ -117,7 +139,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="D:\Anaconda3\envs\coastline_64bit\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -205,7 +227,39 @@
       <workItem from="1576046861141" duration="1543000" />
       <workItem from="1576150238606" duration="4001000" />
       <workItem from="1576158221128" duration="3963000" />
-      <workItem from="1576215587303" duration="1278000" />
+      <workItem from="1576215587303" duration="6138000" />
+      <workItem from="1576461022461" duration="21257000" />
+      <workItem from="1576832658059" duration="11877000" />
+      <workItem from="1577191188569" duration="1254000" />
+      <workItem from="1577245053588" duration="3857000" />
+      <workItem from="1577939460763" duration="4688000" />
+      <workItem from="1578034119531" duration="784000" />
+      <workItem from="1578229237036" duration="628000" />
+      <workItem from="1578815982801" duration="9114000" />
+      <workItem from="1578958054106" duration="183000" />
+      <workItem from="1578958243415" duration="610000" />
+      <workItem from="1578958864941" duration="243000" />
+      <workItem from="1578959121114" duration="4195000" />
+      <workItem from="1578964207682" duration="42000" />
+      <workItem from="1578964260208" duration="171000" />
+      <workItem from="1578964442081" duration="1380000" />
+      <workItem from="1579081990404" duration="1894000" />
+      <workItem from="1579445817258" duration="601000" />
+      <workItem from="1580186917085" duration="213000" />
+      <workItem from="1580634284486" duration="1454000" />
+      <workItem from="1581601443935" duration="6592000" />
+      <workItem from="1582433785433" duration="3479000" />
+      <workItem from="1582717650117" duration="1205000" />
+      <workItem from="1583943115684" duration="1296000" />
+      <workItem from="1585859756505" duration="1489000" />
+      <workItem from="1587566103796" duration="1894000" />
+      <workItem from="1602216846535" duration="1294000" />
+      <workItem from="1602218148595" duration="3755000" />
+      <workItem from="1603097887539" duration="631000" />
+      <workItem from="1604978152028" duration="630000" />
+      <workItem from="1608004745634" duration="1838000" />
+      <workItem from="1608036204504" duration="445000" />
+      <workItem from="1608536300298" duration="31000" />
     </task>
     <task id="LOCAL-00001" summary="generate_salinas_training_images">
       <created>1575961522890</created>
@@ -221,7 +275,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576026326045</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="z-score_normalization &amp; uint8_problem">
+      <created>1576221354417</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1576221354417</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,7 +303,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="generate_salinas_training_images" />
-    <option name="LAST_COMMIT_MESSAGE" value="generate_salinas_training_images" />
+    <MESSAGE value="z-score_normalization &amp; uint8_problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="z-score_normalization &amp; uint8_problem" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -252,11 +314,46 @@
           <line>125</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_spectrum.py</url>
+          <line>653</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
+          <line>635</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
+          <line>674</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
+          <line>704</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing_by_category.py</url>
+          <line>655</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing.py</url>
+          <line>633</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/salinas_data_preprocessing.py</url>
+          <line>359</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
-        <watch expression="inImgData[:,:,156]" language="Python" />
+        <watch expression="inImgData" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -264,9 +361,10 @@
     <SUITE FILE_PATH="coverage/ROIComputation$XImage.coverage" NAME="XImage Coverage Results" MODIFIED="1568904800207" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ROI$XImage.coverage" NAME="XImage Coverage Results" MODIFIED="1575257413552" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ROI$XImage_test.coverage" NAME="XImage-test Coverage Results" MODIFIED="1571364179800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ROI$salinas_data_preprocessing_by_spectrum_py.coverage" NAME="salinas_data_preprocessing_by_spectrum.py Coverage Results" MODIFIED="1576215605603" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ROI$salinas_data_preprocessing_by_spectrum_py.coverage" NAME="salinas_data_preprocessing_by_spectrum.py Coverage Results" MODIFIED="1576893237372" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ROI$XImage_ZJ.coverage" NAME="XImage-ZJ Coverage Results" MODIFIED="1571966177196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ROI$salinas_data_preprocessing_by_category_py.coverage" NAME="salinas_data_preprocessing_by_category.py Coverage Results" MODIFIED="1576152507536" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/ROI$salinas_data_preprocessing_py.coverage" NAME="salinas_data_preprocessing.py Coverage Results" MODIFIED="1575294139888" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ROI$salinas_data_preprocessing_by_category_py.coverage" NAME="salinas_data_preprocessing_by_category.py Coverage Results" MODIFIED="1578962175783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ROI$remote_salinas_data_preprocessing.coverage" NAME="remote_salinas_data_preprocessing Coverage Results" MODIFIED="1578960209352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ROI$salinas_data_preprocessing_py.coverage" NAME="salinas_data_preprocessing.py Coverage Results" MODIFIED="1602225070089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

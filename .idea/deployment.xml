@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="server123@114.215.196.55:10022">
+    <serverData>
+      <paths name="server123@114.215.196.55:10022">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/media/server123/747966f3-070a-42b3-af82-6edf8d1e1a93/zm/PycharmProjects/ROI" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>
